@@ -42,7 +42,7 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <Button size="lg" href="https://pkfokam48.github.io/Drivetest-Telecom-Dashboard/">
+            <Button size="lg" href="http://www.f2gsolutions.com/">
               <ExternalLink size={18} /> Try It Now
             </Button>
           </div>

@@ -62,7 +62,7 @@ export default function Header() {
             <button onClick={toggleDark} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle dark mode">
               {dark ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <Button size="sm" href="https://pkfokam48.github.io/Drivetest-Telecom-Dashboard/">Try It Now</Button>
+            <Button size="sm" href="http://www.f2gsolutions.com/">Try It Now</Button>
           </div>
 
           <button className="md:hidden p-2" onClick={() => setOpen(!open)} aria-label="Toggle menu">
@@ -82,7 +82,7 @@ export default function Header() {
               <button onClick={toggleDark} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Toggle dark mode">
                 {dark ? <Sun size={18} /> : <Moon size={18} />}
               </button>
-              <Button size="sm" href="https://pkfokam48.github.io/Drivetest-Telecom-Dashboard/" className="flex-1">Try It Now</Button>
+              <Button size="sm" href="http://www.f2gsolutions.com/" className="flex-1">Try It Now</Button>
             </div>
           </div>
         </div>
