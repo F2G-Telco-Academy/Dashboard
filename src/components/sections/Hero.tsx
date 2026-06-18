@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { ExternalLink } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Container from "../ui/Container";
 import Button from "../ui/Button";
 
@@ -20,8 +20,29 @@ const stats = [
 export default function Hero() {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
-  const next = useCallback(() => setCurrent((c) => (c + 1) % showcaseImages.length), []);
+  const extendedImages = [...showcaseImages, ...showcaseImages];
+
+  const next = useCallback(() => {
+    setIsTransitioning(true);
+    setCurrent((c) => c + 1);
+  }, []);
+
+  const prev = () => {
+    setIsTransitioning(true);
+    setCurrent((c) => c - 1);
+  };
+
+  const handleTransitionEnd = () => {
+    if (current >= showcaseImages.length) {
+      setIsTransitioning(false);
+      setCurrent(0);
+    } else if (current < 0) {
+      setIsTransitioning(false);
+      setCurrent(showcaseImages.length - 1);
+    }
+  };
 
   useEffect(() => {
     if (paused) return;
@@ -30,72 +51,72 @@ export default function Hero() {
   }, [paused, next]);
 
   return (
-    <section className="pt-32 pb-20">
+    <section className="pt-28 pb-12 md:pb-16">
       <Container>
-        <div className="text-center max-w-3xl mx-auto reveal">
-          <p className="text-xs uppercase tracking-label text-accent font-semibold mb-4">Multi-RAT Network Validation</p>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-heading-xl text-primary dark:text-white leading-[1.1] mb-6">
+        <div className="reveal max-w-[900px] mx-auto text-center space-y-6">
+          <p className="section-label">Multi-RAT Network Validation</p>
+          <h1 className="heading-xl">
             Professional Drive Test Dashboard
           </h1>
-          <p className="text-lg text-muted max-w-2xl mx-auto mb-8">
+          <p className="text-body dark:text-gray-300 max-w-2xl mx-auto">
             Upload CSV, visualize 13+ KPIs, overlay on interactive maps, and share with clients — all in your browser. Supports LTE, 5G NR, WCDMA, GSM.
           </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-            <Button size="lg" href="http://www.f2gsolutions.com/">
-              <ExternalLink size={18} /> Try It Now
+          <div className="flex flex-wrap gap-3 justify-center pt-2">
+            <Button size="lg" variant="outline" onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}>
+              Learn More
             </Button>
           </div>
         </div>
 
-        {/* Auto-rotating showcase */}
         <div
-          className="reveal relative mx-auto max-w-4xl"
+          className="reveal mt-16 group"
           style={{ perspective: "2000px" }}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
-          <div className="relative rounded-2xl border border-card-border dark:border-gray-700 overflow-hidden shadow-xl" style={{ transform: "rotateX(4deg)" }}>
-            <div className="bg-white dark:bg-gray-900 p-2">
-              <div className="flex gap-1.5 mb-2 px-2 pt-1">
-                <div className="w-3 h-3 rounded-full bg-red-400" />
-                <div className="w-3 h-3 rounded-full bg-amber-400" />
-                <div className="w-3 h-3 rounded-full bg-emerald-400" />
-              </div>
-              <div className="relative h-[300px] sm:h-[400px] overflow-hidden rounded-xl">
-                <div
-                  className="flex h-full transition-transform duration-700 ease-in-out"
-                  style={{ transform: `translateX(-${current * 100}%)` }}
-                >
-                  {showcaseImages.map((img, i) => (
-                    <div key={i} className="flex-shrink-0 w-full h-full bg-gray-900 flex items-center justify-center">
-                      <img src={img.src} alt={img.alt} className="w-full h-full object-cover" />
-                    </div>
-                  ))}
-                </div>
+          <div
+            className="rounded-2xl overflow-hidden border border-card-border dark:border-gray-700 shadow-2xl relative bg-white dark:bg-gray-900"
+            style={{ transform: "rotateX(4deg)", transformOrigin: "center bottom" }}
+          >
+            <div className="relative w-full overflow-hidden" style={{ paddingBottom: "56.25%" }}>
+              <div
+                className="absolute inset-0 flex"
+                style={{
+                  transform: `translateX(-${current * 100}%)`,
+                  transition: isTransitioning ? "transform 700ms ease-in-out" : "none",
+                }}
+                onTransitionEnd={handleTransitionEnd}
+              >
+                {extendedImages.map((img, i) => (
+                  <div key={i} className="w-full h-full flex-shrink-0 relative">
+                    <img src={img.src} alt={img.alt} className="absolute inset-0 w-full h-full object-contain" />
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* Dots */}
-          <div className="flex justify-center gap-2 mt-4">
-            {showcaseImages.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrent(i)}
-                className={`w-2 h-2 rounded-full transition-all ${i === current ? "bg-accent w-6" : "bg-gray-300 dark:bg-gray-600"}`}
-                aria-label={`Slide ${i + 1}`}
-              />
-            ))}
+            <button
+              onClick={prev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border border-card-border dark:border-gray-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-5 h-5 text-primary dark:text-gray-100" />
+            </button>
+            <button
+              onClick={next}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm border border-card-border dark:border-gray-700 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-5 h-5 text-primary dark:text-gray-100" />
+            </button>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="reveal grid grid-cols-3 gap-8 max-w-md mx-auto mt-12 text-center">
+        <div className="reveal flex justify-center gap-12 mt-14">
           {stats.map((s) => (
-            <div key={s.label}>
-              <p className="text-2xl font-bold tracking-heading-lg text-primary dark:text-white">{s.value}</p>
-              <p className="text-xs text-muted mt-1">{s.label}</p>
+            <div key={s.label} className="text-center">
+              <div className="text-2xl font-medium tracking-heading-lg text-primary dark:text-gray-100">{s.value}</div>
+              <div className="text-xs text-muted dark:text-gray-400 mt-1">{s.label}</div>
             </div>
           ))}
         </div>

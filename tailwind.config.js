@@ -9,10 +9,11 @@ export default {
         muted: "#818293",
         accent: "#698D9C",
         dark: "#0F0F11",
+        "nav-gradient-end": "#D6DEE6",
         "card-border": "#E5E5E5",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       letterSpacing: {
         "heading-xl": "-0.07em",
@@ -25,10 +26,21 @@ export default {
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",
         "slide-up": "slideUp 0.6s ease-out forwards",
+        marquee: "marquee 30s linear infinite",
       },
       keyframes: {
-        fadeIn: { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
-        slideUp: { "0%": { transform: "translateY(30px)", opacity: "0" }, "100%": { transform: "translateY(0)", opacity: "1" } },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        slideUp: {
+          "0%": { transform: "translateY(30px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
     },
   },

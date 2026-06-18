@@ -30,25 +30,32 @@ const useCases = [
 
 export default function UseCases() {
   return (
-    <section id="use-cases" className="py-24">
+    <section id="use-cases" className="py-12 md:py-16">
       <Container>
-        <div className="text-center mb-16 reveal">
-          <p className="text-xs uppercase tracking-label text-accent font-semibold mb-3">Who It's For</p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-heading-lg text-primary dark:text-white">Built For Your Team</h2>
+        <div className="reveal text-center mb-10 md:mb-12 space-y-4">
+          <p className="section-label">Use Cases</p>
+          <h2 className="heading-lg">Built for your team</h2>
+          <p className="text-body dark:text-gray-300 max-w-xl mx-auto">
+            Whether you're optimizing networks or presenting to clients — the Dashboard adapts to your workflow.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 reveal-children">
+        <div className="reveal-children grid md:grid-cols-2 gap-5">
           {useCases.map((uc) => (
-            <div key={uc.title} className="p-5 rounded-xl border border-card-border dark:border-gray-700 bg-white dark:bg-gray-800 hover:shadow-md transition-all duration-300">
-              <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center mb-4">
-                <uc.icon size={20} className="text-accent" />
+            <div key={uc.title} className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl border border-card-border dark:border-gray-700 p-6 space-y-4 hover:bg-white dark:hover:bg-gray-800 hover:shadow-md transition-all duration-300">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg bg-white dark:bg-gray-900 flex items-center justify-center flex-shrink-0 border border-card-border dark:border-gray-700">
+                  <uc.icon className="w-5 h-5 text-accent dark:text-[#8BADB9]" />
+                </div>
+                <div>
+                  <h3 className="text-[15px] font-medium text-primary dark:text-gray-100 tracking-heading-sm">{uc.title}</h3>
+                  <p className="text-xs text-muted dark:text-gray-400 mt-1">{uc.desc}</p>
+                </div>
               </div>
-              <h3 className="font-semibold tracking-heading-sm text-primary dark:text-white mb-2">{uc.title}</h3>
-              <p className="text-sm text-muted mb-3">{uc.desc}</p>
-              <ul className="space-y-1.5">
+              <ul className="space-y-2 pl-14">
                 {uc.bullets.map((b) => (
-                  <li key={b} className="flex items-center gap-2 text-sm text-muted">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0" />
+                  <li key={b} className="flex items-center gap-2 text-xs text-muted dark:text-gray-400">
+                    <span className="w-1 h-1 rounded-full bg-accent dark:bg-[#8BADB9] flex-shrink-0" />
                     {b}
                   </li>
                 ))}
